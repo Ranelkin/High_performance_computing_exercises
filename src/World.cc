@@ -196,6 +196,12 @@ class World {
         }
     }
 
+    bool is_stable(){
+        std::vector<std::vector<int>> copy = curr_state; 
+        evolve(); 
+        evolve(); 
+        return curr_state == copy; 
+    }
 }; 
 
 
