@@ -31,5 +31,8 @@
 *.out
 *.app
 
+# txt files
+*.txt
+
 .vscode
 .DS_Store
