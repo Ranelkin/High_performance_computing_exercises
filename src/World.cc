@@ -218,7 +218,7 @@ World::World(int height, int width): height(height), width(width) {
         int row = index / height; 
         int column = index - row * height; 
         if (index > 0 && row < height && index > 0 ){
-        return state1[row][height]; 
+        return state1[row][column]; 
         }
     }
 
