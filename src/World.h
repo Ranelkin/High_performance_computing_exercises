@@ -19,7 +19,7 @@ class World {
 
         std::vector<std::vector<int>> state1;
         std::vector<std::vector<int>> state2; 
-        std::vector<std::vector<int>> state3; 
+        
     
     public: 
         World(){}; 
@@ -48,6 +48,13 @@ class World {
         // Generates grid with random 0 1 occurences
         void random(double probability = 0.3); 
 
+        void set(int x, int y); 
+
+        void set(int index); 
+
+        int get(int x, int y); 
+
+        int get(int index); 
 }; 
 
 #endif

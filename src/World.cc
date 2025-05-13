@@ -12,7 +12,7 @@
 World::World(int height, int width): height(height), width(width) {
             state1.resize(height+2, std::vector<int>(width+2, 0)); // Initialize with zeros
             state2.resize(height+2, std::vector<int>(width+2, 0)); 
-            state3.resize(height+2, std::vector<int>(width+2, 0));
+            
         }
 
         World::World(){}
@@ -105,8 +105,6 @@ World::World(int height, int width): height(height), width(width) {
             std::swap(state1, state2); 
         }
 
-       
-
         void World::print() {
             std::cout << "\033[2J\033[H"; // Clear screen
             int n_height = height+1;
@@ -193,6 +191,38 @@ World::World(int height, int width): height(height), width(width) {
         return state1 == copy; 
     }
 
+
+    void World::set(int x, int y){
+        if (x > 0 && x < height && y > 0 && y < width){
+        state1[x][y] = 1; 
+        }
+    }
+
+    void World::set(int index){
+        // Division without rest
+        int row = index / height; 
+        // Get index of column with remainder
+        int column = index - row * height;
+        if (index > 0 && row < height && column < width ){
+        state1[row][column] = 1; 
+        }
+    }
+
+    int World::get(int x, int y){ 
+      if (x > 0 && x < height && y > 0 && y < width){  
+        return state1[x][y]; 
+      }
+    }
+  
+    int World::get(int index){
+        int row = index / height; 
+        int column = index - row * height; 
+        if (index > 0 && row < height && index > 0 ){
+        return state1[row][height]; 
+        }
+    }
+
+    
 
 int main(){
     
