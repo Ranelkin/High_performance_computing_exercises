@@ -1,44 +1,69 @@
 #ifndef CLI_H
 #define CLI_H 
 #include <string>
-
+#include "World.h"
+#include <chrono>
 
 class CLI {
+    /*
+        CLI class for interaction with cellular automaton
+    */
+public: 
+    CLI();
+
+    // Create world given height and width
+    void create(int height, int width); 
+
+    // Load world from specified file 
+    void load(std::string f_path); 
     
-    public: 
-        void create(); 
+    // Save current state of the world to a file
+    void save(std::string filename); 
 
-        void load(std::string f_path); 
+    // Enable/disable printing of the world
+    void print(int setting);
+    
+    // Set delay for printing (in ms)
+    void delay(int ms); 
 
-        void save(); 
+    // Enable/disable stability check
+    void stability(int x); 
 
-        void print(int setting);
-        
-        void delay(int ms); 
+    // Run for n generations and return execution time
+    double run(int gen); 
 
-        void stability(); 
+    // Set cell state at (x, y)
+    void set(int x, int y, int alive); 
 
-        void run(); 
+    // Set cell state at index
+    void set(int index, int alive); 
 
-        void set(int x, int y, int alive); 
+    // Get cell state at (x, y)
+    void get(int x, int y); 
 
-        void set(int index); 
+    // Get cell state at index
+    void get(int index); 
 
-        void get(int x, int y); 
+    // Add glider pattern at (x, y)
+    void glider(int x, int y); 
 
-        void get(int index); 
+    // Add toad pattern at (x, y)
+    void toad(int x, int y); 
 
-        void glider(int x, int y); 
+    // Add beacon pattern at (x, y)
+    void beacon(int x, int y); 
 
-        void toad(int x, int y); 
+    // methuselah pattern at (x, y)
+    void methuselah(int x, int y); 
 
-        void beacon(int x, int y); 
+    // Add n random patterns
+    void random(int n); 
 
-        void methuselah(int x, int y); 
-
-        void random(int n); 
-
+private: 
+    bool check_stability = false; 
+    int print_delay = 100; 
+    bool print_world = false; 
+    World world; 
 }; 
-
 
 #endif
