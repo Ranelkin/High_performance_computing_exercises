@@ -22,6 +22,7 @@ class World {
         std::vector<std::vector<int>> state3; 
     
     public: 
+        World(){}; 
         World(int height, int width): height(height), width(width) {}
 
         World(std::string f_path) {};

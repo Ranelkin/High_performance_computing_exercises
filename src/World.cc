@@ -6,24 +6,17 @@
 #include <chrono>
 #include <thread>
 #include <random>
-class World {
-    /* The array holds an additional border of 0 around to allow efficient checking 
-    without edge cases*/
-    private: 
-        int height; 
-        int width; 
 
-        std::vector<std::vector<int>> curr_state;
-        std::vector<std::vector<int>> future_state; 
-        
-    
-    public: 
-        World(int height, int width): height(height), width(width) {
-            curr_state.resize(height+2, std::vector<int>(width+2, 0)); // Initialize with zeros
-            future_state.resize(height+2, std::vector<int>(width+2, 0)); 
+#include "World.h"
+
+World::World(int height, int width): height(height), width(width) {
+            state1.resize(height+2, std::vector<int>(width+2, 0)); // Initialize with zeros
+            state2.resize(height+2, std::vector<int>(width+2, 0)); 
+            state3.resize(height+2, std::vector<int>(width+2, 0));
         }
 
-        World(std::string f_path) {
+        World::World(){}
+        World::World(std::string f_path) {
             std::string height_str; 
             std::string width_str; 
             std::ifstream f(f_path); 
@@ -39,8 +32,8 @@ class World {
                 }
                 //Add blank line first 
                 std::vector<int> v1(width+2, 0); 
-                curr_state.push_back(v1); 
-                future_state.push_back(v1); 
+                state1.push_back(v1); 
+                state2.push_back(v1); 
                 //Construct current & future state from file
                 while(getline(f, line)){
 
@@ -53,14 +46,14 @@ class World {
                     }
                     line_vec.push_back(0); 
 
-                    curr_state.push_back(line_vec); 
-                    future_state.push_back(line_vec); 
+                    state1.push_back(line_vec); 
+                    state2.push_back(line_vec); 
                 }
 
                 //Add blank line after added matrix 
                 std::vector<int> v2(width+2, 0); 
-                curr_state.push_back(v2); 
-                future_state.push_back(v2); 
+                state1.push_back(v2); 
+                state2.push_back(v2); 
 
                 // Output generated matrix 
                 std::cout << "Created world from file: " << std::endl;
@@ -68,7 +61,7 @@ class World {
                 int n_width = width+2; 
                 for (int i=1; i< n_height; i++) {
                     for (int j=1; j<n_width; j++) {
-                        std::cout << curr_state[i][j] << " ";
+                        std::cout << state1[i][j] << " ";
                     }
                     std::cout << std::endl;
                 }
@@ -78,53 +71,50 @@ class World {
         };
 
 
-        int get_height(){
+        int World::get_height(){
             return height; 
         }
 
-        int get_width(){
+        int World::get_width(){
             return width; 
         }
 
-        int world_size(){
+        int World::world_size(){
             return width*height; 
         }
 
-        void evolve(){
+        void World::evolve(){
             int n_height = height+2; 
             int n_width = width+2; 
             for (int i=1; i<n_height-1; i++){
                 for (int j=1; j<n_width-1; j++){
                     int n_sum = 0; //sum of neighbours
-                    n_sum += curr_state[i-1][j-1]+ curr_state[i-1][j] + curr_state[i-1][j+1]
-                    + curr_state[i][j-1] + curr_state[i][j+1] + curr_state[i+1][j-1] + curr_state[i+1][j] + curr_state[i+1][j+1]; 
+                    n_sum += state1[i-1][j-1]+ state1[i-1][j] + state1[i-1][j+1]
+                    + state1[i][j-1] + state1[i][j+1] + state1[i+1][j-1] + state1[i+1][j] + state1[i+1][j+1]; 
 
-                    if (curr_state[i][j]==1){
+                    if (state1[i][j]==1){
                         bool alive = n_sum == 2 || n_sum == 3; 
-                        future_state[i][j] = alive ? 1 : 0; 
+                        state2[i][j] = alive ? 1 : 0; 
                         
                     } else {
                         bool alive = n_sum == 3; 
-                        future_state[i][j] = alive ? 1 : 0; 
+                        state2[i][j] = alive ? 1 : 0; 
                     }
                 }
             }
-            std::swap(curr_state, future_state); 
+            std::swap(state1, state2); 
         }
 
-        bool is_stable(){
+       
 
-            return false; 
-        }
-
-        void print() {
+        void World::print() {
             std::cout << "\033[2J\033[H"; // Clear screen
             int n_height = height+1;
             int n_width = width+1;
             
             for (int i=1; i< n_height; i++) {
                 for (int j=1; j<n_width; j++) {
-                    std::string cell = curr_state[i][j] == 1 ? "\033[1m\033[32m\u2593\u2593\033[0m\033" : "\033[1m\033[90m\u2591\u2591\033[0m";
+                    std::string cell = state1[i][j] == 1 ? "\033[1m\033[32m\u2593\u2593\033[0m\033" : "\033[1m\033[90m\u2591\u2591\033[0m";
                     std::cout << cell << " ";
                 }
                 std::cout << std::endl;
@@ -133,7 +123,7 @@ class World {
             std::cout << std::endl;
         }
 
-        void load(std::string f_path){
+        void World::load(std::string f_path){
             std::string height_str; 
             std::string width_str; 
             std::ifstream f(f_path); 
@@ -156,11 +146,11 @@ class World {
                     while (iss >> val) {
                         line_vec.push_back(val); 
                     }
-                    curr_state.push_back(line_vec); 
+                    state1.push_back(line_vec); 
                 }
                 // Output generated matrix 
                 std::cout << "Created world from file: " << std::endl;
-                for (const auto& row : curr_state) {
+                for (const auto& row : state1) {
                     for (const auto& cell : row) {
                         std::cout << cell << " ";
                     }
@@ -171,19 +161,19 @@ class World {
             }
         }
 
-        void save(){
+        void World::save(){
             std::ofstream File("GameState.txt"); 
             File << height << std::endl; 
             File << width << std::endl; 
-            for (size_t i = 0; i < curr_state.size(); i++){
-                for (size_t j = 0; j < curr_state[i].size(); j++){
-                    File << curr_state[i][j] << " "; 
+            for (size_t i = 0; i < state1.size(); i++){
+                for (size_t j = 0; j < state1[i].size(); j++){
+                    File << state1[i][j] << " "; 
                 }
                 File << std::endl; 
             }
         }
         // Generates grid with random 0 1 occurences
-        void random(double probability = 0.3) {
+        void World::random(double probability = 0.3) {
         std::random_device rd;
         std::mt19937 gen(rd()); 
         std::bernoulli_distribution dist(probability); 
@@ -191,18 +181,17 @@ class World {
         // Populate inner grid 
         for (int i = 1; i <= height; ++i) {
             for (int j = 1; j <= width; ++j) {
-                curr_state[i][j] = dist(gen); // Randomly set to 0 or 1
+                state1[i][j] = dist(gen); // Randomly set to 0 or 1
             }
         }
     }
 
-    bool is_stable(){
-        std::vector<std::vector<int>> copy = curr_state; 
+    bool World::is_stable(){
+        std::vector<std::vector<int>> copy = state1; 
         evolve(); 
         evolve(); 
-        return curr_state == copy; 
+        return state1 == copy; 
     }
-}; 
 
 
 int main(){
