@@ -1,6 +1,7 @@
-#include "cli.h"
+#include "include/cli.h"
 #include <random>
 #include <thread>
+#include "include/World.h"
 
 CLI::CLI() : print_delay(100), print_world(false), check_stability(false) {}
 

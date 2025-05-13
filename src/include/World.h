@@ -22,11 +22,10 @@ class World {
         
     
     public: 
-        World(){}; 
-        World(int height, int width): height(height), width(width) {}
-
-        World(std::string f_path) {};
-
+       
+        World();
+        World(int height, int width);
+        World(std::string f_path);
 
         int get_height(); 
 
@@ -44,7 +43,6 @@ class World {
 
         void save(); 
 
-        bool is_stable(); 
         // Generates grid with random 0 1 occurences
         void random(double probability = 0.3); 
 

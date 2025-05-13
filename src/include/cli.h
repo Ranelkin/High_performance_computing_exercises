@@ -60,9 +60,9 @@ public:
     void random(int n); 
 
 private: 
+    bool print_world = false; 
     bool check_stability = false; 
     int print_delay = 100; 
-    bool print_world = false; 
     World world; 
 }; 
 

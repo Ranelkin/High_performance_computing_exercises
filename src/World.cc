@@ -7,15 +7,17 @@
 #include <thread>
 #include <random>
 
-#include "World.h"
+#include "include/World.h"
 
-World::World(int height, int width): height(height), width(width) {
-            state1.resize(height+2, std::vector<int>(width+2, 0)); // Initialize with zeros
-            state2.resize(height+2, std::vector<int>(width+2, 0)); 
-            
-        }
+        World::World(): height(0), width(0){}
+        
+        World::World(int height, int width): height(height), width(width) {
+                    state1.resize(height+2, std::vector<int>(width+2, 0)); // Initialize with zeros
+                    state2.resize(height+2, std::vector<int>(width+2, 0)); 
+                    
+                }
 
-        World::World(){}
+       
         World::World(std::string f_path) {
             std::string height_str; 
             std::string width_str; 
@@ -171,7 +173,7 @@ World::World(int height, int width): height(height), width(width) {
             }
         }
         // Generates grid with random 0 1 occurences
-        void World::random(double probability = 0.3) {
+        void World::random(double probability) {
         std::random_device rd;
         std::mt19937 gen(rd()); 
         std::bernoulli_distribution dist(probability); 
@@ -212,6 +214,7 @@ World::World(int height, int width): height(height), width(width) {
       if (x > 0 && x < height && y > 0 && y < width){  
         return state1[x][y]; 
       }
+      else { return 100; }
     }
   
     int World::get(int index){
@@ -220,25 +223,8 @@ World::World(int height, int width): height(height), width(width) {
         if (index > 0 && row < height && index > 0 ){
         return state1[row][column]; 
         }
+        else { return 100; }
     }
 
     
 
-int main(){
-    
-    //std::string filepath; 
-    
-    int height = 30; 
-    int width = 30; 
-    std::string filepath = "../p67_snark_loop.txt"; 
-    World world = World(height, width);
-    world.random(0.3); 
-    
-    while(true){
-        world.evolve(); // Compute next state
-        std::this_thread::sleep_for(std::chrono::seconds(1)); // Wait for 1 second
-        world.print(); // Print new state
-    }
-   
-    return 0; 
-}
