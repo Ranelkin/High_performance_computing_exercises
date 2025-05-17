@@ -1,0 +1,3 @@
+/Users/ranelkarimov/Library/Mobile Documents/com~apple~CloudDocs/Studium /Semester 6/HLRA Praktikum/Abgaben/Blatt2/ConwaysGameOfLive/build/CMakeFiles/game.dir
+/Users/ranelkarimov/Library/Mobile Documents/com~apple~CloudDocs/Studium /Semester 6/HLRA Praktikum/Abgaben/Blatt2/ConwaysGameOfLive/build/CMakeFiles/edit_cache.dir
+/Users/ranelkarimov/Library/Mobile Documents/com~apple~CloudDocs/Studium /Semester 6/HLRA Praktikum/Abgaben/Blatt2/ConwaysGameOfLive/build/CMakeFiles/rebuild_cache.dir

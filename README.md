@@ -1,12 +1,3 @@
-# ConwaysGameOfLive
-Implementation of Conways game of live in a memory efficient manner in C++ for the High performance computing class of Goethe University
+Code Exercises for the High Performance Computing course of the Goethe University Summer 2025
 
-
-# Run the programm
-Run the following commands: 
-    
-    `mkdir build 
-    cd build
-    cmake ..
-    cmake --build .`
-    
+Each module represents a programm implementation and instructions on how to work with them is in the corresponding directory. 
