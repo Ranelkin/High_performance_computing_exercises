@@ -1,0 +1,26 @@
+Depth of a network 
+    -Networks consist of layers. The ammount of layers is equivalent to the networks depth 
+Width of a layers
+    -The width of a layer is equivalent to the ammount of neurons in a layer
+training vs testing 
+    -In training the data is fed with labeled data to actually condition itself how to correctly interpreting it
+    -In testing data on which the net was not trained on is being fed in to test and evaluate the actual precision of the network
+
+batch size: 
+    - Describes the number of samples processed before the models parameter are updated
+epoch 
+    - An epoch consists of one full cycle through the entire dataset during the training process. 
+    -During each epoch, the model's parameters are updated based on the error calculated from the previous iteration. 
+
+feed forward
+    - Type of network where information flows in single direction. Namely forward
+
+backpropagation
+    -Backpropagation is a method used to train neural networks by adjusting the weights and biases based on the error rate from predictions
+
+loss
+    -Quantifies the error  between prediction and the actual correct values
+
+learning rate
+    -Parameter which sets the rate at which the weights are updated after each learning iteration
+
