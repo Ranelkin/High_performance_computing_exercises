@@ -11,6 +11,7 @@ Emails: lakos@fias.uni-frankfurt.de; mithran@fias.uni-frankfurt.de
 #include <algorithm>
 #include <random>
 #include <numeric>
+#include <xmmintrin.h>
 
 namespace Utils
 {
@@ -23,6 +24,20 @@ namespace Utils
         res += matrix[i][j] * vector[j]; 
       }
       result[i] = res; 
+    }
+  }
+
+  void MatVecMulSimd(const std::vector<std::vector<float>>& matrix,
+                 const std::vector<float>& vector,
+                 std::vector<float>& result){
+    for (int i = 0; i < result.size(); i+=4){
+      __m128 res = _mm_setzero_ps();
+      for (int j = 0; j < matrix[0].size(); j+=4){
+        __m128 a = _mm_load_ps(&matrix[i][j]);
+        __m128 b = _mm_load_ps(&vector[j]);
+        res = _mm_add_ps(res, _mm_mul_ps(a, b));
+      }
+      _mm_store_ps(&result[i], res);
     }
   }
 
@@ -89,6 +104,7 @@ namespace Utils
                        std::vector<float>& result)
   {
     MatVecMul(matrixA, vectorX, result);
+    MatVecMulSimd(matrixA, vectorX, result);
     VecAdd(result, vectorB, result);
   }
 

@@ -17,6 +17,7 @@ Emails: lakos@fias.uni-frankfurt.de; mithran@fias.uni-frankfurt.de
 #include <random>
 #include <stdexcept>
 #include <cmath>
+#include <xmmintrin.h>
 
 namespace Utils
 {
@@ -28,6 +29,9 @@ namespace Utils
    */
   void MatVecMul(const std::vector<std::vector<float>>& matrix, const std::vector<float>& vector,
                  std::vector<float>& result);
+
+  void MatVecMulSimd(const std::vector<std::vector<float>>& matrix, const std::vector<float>& vector,
+                 std::vector<float>& result); 
 
   void MatTransposeVecMul(const std::vector<std::vector<float>>& matrix, const std::vector<float>& vector,
                           std::vector<float>& result);
